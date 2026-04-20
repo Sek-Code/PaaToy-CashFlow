@@ -45,15 +45,17 @@ Clone feature จาก [ป้านวล](https://app.parnuan.com) + เพ�
 
 | Layer | Technology | เหตุผล |
 |-------|-----------|--------|
-| Framework | Next.js 14+ App Router | มาตรฐานตลาดงาน |
-| Language | TypeScript | type-safe, โชว์สกิล |
-| Styling | Tailwind CSS | productive, มาตรฐาน |
+| Frontend Framework | Next.js 16 App Router | มาตรฐานตลาดงาน |
+| Frontend Language | TypeScript 5 | type-safe, โชว์สกิล |
+| Frontend Styling | Tailwind CSS v4 | productive, มาตรฐาน |
 | UI Components | shadcn/ui | สวย, customizable |
 | Auth | `@line/liff@2.28.0` | relevant ตลาดไทย |
-| Database | MongoDB + Mongoose | flexible |
+| Backend Framework | NestJS 11 | structured, enterprise-ready |
+| ORM | TypeORM 0.3 | type-safe database queries |
+| Database | PostgreSQL | relational, stable |
 | AI | Claude API (Haiku + Sonnet) | มาแรง 2025-26 |
 | Payment | Stripe | production-ready |
-| Hosting | Vercel | free + ง่าย |
+| Hosting | Vercel (Frontend) | free + ง่าย |
 | CDN | Cloudflare | free + เร็ว |
 | Monitoring | Sentry | free tier |
 | Analytics | Google Analytics + Microsoft Clarity | free |
@@ -142,92 +144,192 @@ Clone feature จาก [ป้านวล](https://app.parnuan.com) + เพ�
 
 ---
 
-## 🗄 Database Schema (Draft)
+## 🗄 Database Schema (Draft — PostgreSQL + TypeORM)
 
-### `users`
+### `users` table
 ```typescript
-{
-  _id: ObjectId,
-  lineId: string,          // unique, indexed
-  displayName: string,
-  pictureUrl?: string,
-  email?: string,
-  plan: 'free' | 'premium',
-  currency: string,        // default 'THB'
-  timezone: string,        // default 'Asia/Bangkok'
-  language: 'th' | 'en',
-  streakCount: number,
-  lastActiveAt: Date,
-  createdAt: Date,
-  updatedAt: Date,
+@Entity()
+export class User {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column({ unique: true })
+  lineId: string;           // indexed
+
+  @Column()
+  displayName: string;
+
+  @Column({ nullable: true })
+  pictureUrl?: string;
+
+  @Column({ nullable: true })
+  email?: string;
+
+  @Column({ default: 'free' })
+  plan: 'free' | 'premium';
+
+  @Column({ default: 'THB' })
+  currency: string;
+
+  @Column({ default: 'Asia/Bangkok' })
+  timezone: string;
+
+  @Column({ default: 'th' })
+  language: 'th' | 'en';
+
+  @Column({ default: 0 })
+  streakCount: number;
+
+  @Column({ nullable: true })
+  lastActiveAt: Date;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }
 ```
 
-### `transactions`
+### `transactions` table
 ```typescript
-{
-  _id: ObjectId,
-  userId: ObjectId,        // indexed
-  type: 'income' | 'expense',
-  amount: number,
-  currency: string,
-  categoryId: ObjectId,
-  note?: string,
-  date: Date,              // indexed
-  isRecurring: boolean,
-  aiCategorized: boolean,  // ถูกจัดหมวดด้วย AI หรือไม่
-  createdAt: Date,
-  updatedAt: Date,
+@Entity()
+export class Transaction {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @ManyToOne(() => User)
+  user: User;               // indexed
+
+  @Column()
+  type: 'income' | 'expense';
+
+  @Column('decimal', { precision: 15, scale: 2 })
+  amount: number;
+
+  @Column({ default: 'THB' })
+  currency: string;
+
+  @ManyToOne(() => Category)
+  category: Category;
+
+  @Column({ nullable: true })
+  note?: string;
+
+  @Column()
+  date: Date;               // indexed
+
+  @Column({ default: false })
+  isRecurring: boolean;
+
+  @Column({ default: false })
+  aiCategorized: boolean;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }
 ```
 
-### `categories`
+### `categories` table
 ```typescript
-{
-  _id: ObjectId,
-  userId: ObjectId,        // indexed (null = default category)
-  name: string,
-  icon: string,
-  color: string,
-  type: 'income' | 'expense',
-  isDefault: boolean,
+@Entity()
+export class Category {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @ManyToOne(() => User, { nullable: true })
+  user?: User;              // null = default category
+
+  @Column()
+  name: string;
+
+  @Column()
+  icon: string;
+
+  @Column()
+  color: string;
+
+  @Column()
+  type: 'income' | 'expense';
+
+  @Column({ default: false })
+  isDefault: boolean;
 }
 ```
 
-### `budgets`
+### `budgets` table
 ```typescript
-{
-  _id: ObjectId,
-  userId: ObjectId,
-  categoryId?: ObjectId,   // null = งบรวม
-  amount: number,
-  period: 'daily' | 'weekly' | 'monthly',
-  startDate: Date,
+@Entity()
+export class Budget {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @ManyToOne(() => User)
+  user: User;
+
+  @ManyToOne(() => Category, { nullable: true })
+  category?: Category;      // null = งบรวม
+
+  @Column('decimal', { precision: 15, scale: 2 })
+  amount: number;
+
+  @Column()
+  period: 'daily' | 'weekly' | 'monthly';
+
+  @Column()
+  startDate: Date;
 }
 ```
 
-### `subscriptions`
+### `subscriptions` table
 ```typescript
-{
-  _id: ObjectId,
-  userId: ObjectId,        // indexed
-  stripeCustomerId: string,
-  stripeSubscriptionId: string,
-  status: 'active' | 'cancelled' | 'past_due',
-  plan: 'premium',
-  currentPeriodEnd: Date,
+@Entity()
+export class Subscription {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @OneToOne(() => User)
+  user: User;               // indexed
+
+  @Column()
+  stripeCustomerId: string;
+
+  @Column()
+  stripeSubscriptionId: string;
+
+  @Column()
+  status: 'active' | 'cancelled' | 'past_due';
+
+  @Column({ default: 'premium' })
+  plan: string;
+
+  @Column()
+  currentPeriodEnd: Date;
 }
 ```
 
-### `ai_conversations`
+### `ai_conversations` table
 ```typescript
-{
-  _id: ObjectId,
-  userId: ObjectId,
-  messages: [
-    { role: 'user' | 'assistant', content: string, timestamp: Date }
-  ],
-  createdAt: Date,
+@Entity()
+export class AiConversation {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @ManyToOne(() => User)
+  user: User;
+
+  @Column('jsonb')
+  messages: Array<{
+    role: 'user' | 'assistant';
+    content: string;
+    timestamp: Date;
+  }>;
+
+  @CreateDateColumn()
+  createdAt: Date;
 }
 ```
 
@@ -237,37 +339,48 @@ Clone feature จาก [ป้านวล](https://app.parnuan.com) + เพ�
 
 ```
 PaaToy-CashFlow/
-├── src/
-│   ├── app/
-│   │   ├── (auth)/
-│   │   │   └── login/
-│   │   ├── (main)/
-│   │   │   ├── summary/
-│   │   │   ├── analysis/
-│   │   │   ├── categories/
+├── frontend/                  # Next.js 16 + React 19
+│   ├── src/
+│   │   ├── app/
+│   │   │   ├── (auth)/
+│   │   │   │   └── login/
+│   │   │   ├── (main)/
+│   │   │   │   ├── summary/
+│   │   │   │   ├── analysis/
+│   │   │   │   ├── categories/
+│   │   │   │   ├── transactions/
+│   │   │   │   ├── settings/
+│   │   │   │   └── chat/      # AI Chat
+│   │   │   └── layout.tsx
+│   │   ├── components/
+│   │   │   ├── ui/            # shadcn components
+│   │   │   └── features/      # business components
+│   │   ├── lib/
+│   │   │   ├── liff.ts
+│   │   │   ├── claude.ts
+│   │   │   └── stripe.ts
+│   │   ├── types/             # TypeScript types
+│   │   └── hooks/             # React hooks
+│   ├── public/
+│   ├── .env.local             # ❌ อย่า commit!
+│   └── .env.example
+│
+├── backend/                   # NestJS 11 + TypeORM + PostgreSQL
+│   ├── src/
+│   │   ├── modules/
+│   │   │   ├── users/
 │   │   │   ├── transactions/
-│   │   │   ├── settings/
-│   │   │   └── chat/          # AI Chat
-│   │   ├── api/
+│   │   │   ├── categories/
+│   │   │   ├── budgets/
 │   │   │   ├── ai/
-│   │   │   ├── stripe/
-│   │   │   └── webhook/
-│   │   └── layout.tsx
-│   ├── components/
-│   │   ├── ui/                # shadcn components
-│   │   └── features/          # business components
-│   ├── lib/
-│   │   ├── mongodb.ts
-│   │   ├── liff.ts
-│   │   ├── claude.ts
-│   │   └── stripe.ts
-│   ├── models/                # Mongoose schemas
-│   ├── services/              # business logic
-│   ├── types/                 # TypeScript types
-│   └── hooks/                 # React hooks
-├── public/
-├── .env.local                 # ❌ อย่า commit!
-├── .env.example               # template
+│   │   │   └── stripe/
+│   │   ├── entities/          # TypeORM entities
+│   │   ├── config/            # NestJS config
+│   │   └── main.ts
+│   ├── .env                   # ❌ อย่า commit!
+│   └── .env.example
+│
+├── PLAN.md
 └── README.md
 ```
 
