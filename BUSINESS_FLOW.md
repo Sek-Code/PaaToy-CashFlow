@@ -38,25 +38,41 @@ flowchart TD
 
 ```mermaid
 sequenceDiagram
-    participant U as User (LINE)
-    participant L as LIFF SDK
-    participant F as Frontend (Next.js)
-    participant B as Backend (NestJS)
-    participant DB as PostgreSQL
+    autonumber
+    participant LINE as LINE Platform
+    participant LIFF as Frontend (LIFF)
+    participant API as Backend Server
+    participant DB as Database (PostgreSQL)
 
-    U->>L: เปิด LIFF App
-    L->>L: liff.init()
-    L->>L: liff.isLoggedIn()
-    alt ยังไม่ Login
-        L->>U: liff.login() → LINE Login Page
-        U->>L: ยืนยันตัวตน
-    end
-    L->>F: ได้ LIFF Access Token
-    F->>B: POST /api/auth/line (accessToken)
-    B->>B: Verify token กับ LINE API
-    B->>DB: ค้นหา/สร้าง User (upsert by lineId)
-    B->>F: JWT Token + User Profile
-    F->>U: เข้า Dashboard
+    Note over LINE, DB: 1. ขั้นตอนแลกเปลี่ยน Token (Login & Authentication)
+    LIFF->>LINE: liff.init() & liff.login()
+    LINE-->>LIFF: ส่งคืน LINE ID Token
+    
+    LIFF->>API: POST /auth/line (ส่ง ID Token ใน Header)
+    API->>LINE: Verify ID Token (ตรวจสอบความถูกต้อง)
+    LINE-->>API: ยืนยันข้อมูลผู้ใช้ (UID, Name, Profile)
+
+    API->>DB: SELECT/INSERT User ด้วย line_user_id
+    DB-->>API: คืนค่าข้อมูล User Object
+    
+    Note right of API: ออก App JWT เพื่อใช้ในระบบตัวเอง
+    API->>API: Generate App JWT (Signed with Secret)
+    API-->>LIFF: ส่งกลับ { accessToken: "JWT", isSetup: false }
+
+    Note over LINE, DB: 2. ขั้นตอนการตั้งค่าครั้งแรก (Setup Phase)
+    LIFF->>API: POST /setup (ส่งข้อมูลหมวดหมู่ + Bearer JWT)
+    API->>API: Validate App JWT (ตรวจสอบเอง ไม่ผ่าน LINE)
+    API->>DB: UPDATE user_settings (บันทึกหมวดหมู่)
+    
+    Note right of API: เปลี่ยนเมนูเป็นหน้าจอมือโปร (รูปที่ 4)
+    API->>LINE: Messaging API: Link Rich Menu to User
+    API-->>LIFF: Setup Success!
+
+    Note over LINE, DB: 3. การใช้งานปกติ (Authorized Requests)
+    LIFF->>API: GET /transactions (Bearer JWT)
+    API->>API: Validate App JWT
+    API->>DB: SELECT transactions FROM db
+    API-->>LIFF: คืนค่าข้อมูลรายรับ/รายจ่าย
 ```
 
 ---
@@ -195,21 +211,32 @@ sequenceDiagram
 
 ```mermaid
 sequenceDiagram
-    participant U as User
-    participant F as LIFF Web App
-    participant B as Backend (NestJS)
-    participant AI as Claude API (Sonnet)
-    participant DB as PostgreSQL
+    autonumber
+    participant LINE as LINE Platform
+    participant LIFF as Frontend (LIFF)
+    participant API as Backend Server
+    participant DB as Database (PostgreSQL)
+    participant AI as AI Service (e.g. Gemini API)
 
-    U->>F: พิมพ์ "เดือนนี้ใช้เงินกับอะไรเยอะสุด?"
-    F->>B: POST /api/ai/chat
-    B->>DB: ดึงข้อมูล transactions ของ user
-    B->>AI: System Prompt + Context (ข้อมูลการเงิน) + คำถาม
-    Note over AI: Claude Sonnet วิเคราะห์<br/>แล้วตอบเป็นภาษาไทย
-    AI->>B: "เดือนนี้หลานใช้เงินกับ อาหาร มากที่สุด<br/>รวม 4,500 บาท (45% ของรายจ่ายทั้งหมด)<br/>แนะนำว่า..."
-    B->>DB: บันทึก conversation
-    B->>F: AI Response
-    F->>U: แสดงคำตอบ (streaming)
+    Note over LINE, AI: ขั้นตอนการจดบันทึกและจำแนกด้วย AI
+    User->>LINE: พิมพ์ข้อความ "ข้าวเหนียวหมูปิ้ง 30"
+    LINE->>API: Webhook: Message Event (text, userId)
+
+    API->>DB: SELECT categories FROM user_categories WHERE line_user_id = '...'
+    DB-->>API: คืนค่ารายการหมวดหมู่ (อาหาร, ค่าไฟ, ช็อปปิ้ง, ฯลฯ)
+
+    rect rgb(230, 245, 230)
+    Note right of API: เตรียม Prompt พร้อมข้อกำหนดหมวดหมู่
+    API->>AI: ส่งข้อความ + รายชื่อหมวดหมู่ที่อนุญาต (Strict Rules)
+    AI->>AI: ประมวลผลและเลือกหมวดหมู่ที่ใกล้เคียงที่สุด
+    AI-->>API: คืนค่า JSON (type: "expense", category: "อาหาร", amount: 30)
+    end
+
+    API->>DB: INSERT INTO transactions (user_id, type, category, amount, description)
+    DB-->>API: Success
+
+    API->>LINE: Messaging API: Reply Message "บันทึก 'อาหาร' ให้แล้วค่ะ 30 บาท"
+    LINE->>User: แสดงข้อความยืนยันในห้องแชท
 ```
 
 ---
