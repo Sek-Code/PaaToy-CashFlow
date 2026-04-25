@@ -146,7 +146,99 @@ Clone feature จาก [ป้านวล](https://app.parnuan.com) + เพ�
 
 ## 🗄 Database Schema (Draft — PostgreSQL + TypeORM)
 
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, Index, JoinColumn } from 'typeorm';
+### Entity Relationship Diagram
+
+```mermaid
+erDiagram
+    users ||--o{ transactions : "has many"
+    users ||--o{ categories : "has many (custom)"
+    users ||--o{ budgets : "has many"
+    users ||--o| subscriptions : "has one"
+    users ||--o{ ai_conversations : "has many"
+    categories ||--o{ transactions : "belongs to"
+    categories ||--o{ budgets : "belongs to (optional)"
+
+    users {
+        uuid id PK
+        string lineId UK "indexed"
+        string displayName
+        string pictureUrl "nullable"
+        string email "nullable"
+        enum plan "free | premium"
+        string currency "default THB"
+        string timezone "default Asia/Bangkok"
+        enum language "th | en"
+        int streakCount
+        date lastActiveAt "nullable"
+        timestamp createdAt
+        timestamp updatedAt
+    }
+
+    transactions {
+        uuid id PK
+        uuid userId FK "indexed → users.id"
+        enum type "income | expense"
+        decimal amount "precision 15,2"
+        string currency "default THB"
+        uuid categoryId FK "→ categories.id"
+        string note "nullable"
+        date date "indexed"
+        boolean isRecurring
+        boolean aiCategorized
+        timestamp createdAt
+        timestamp updatedAt
+    }
+
+    categories {
+        uuid id PK
+        uuid userId FK "nullable → users.id"
+        string name
+        string icon
+        string color
+        enum type "income | expense"
+        boolean isDefault
+    }
+
+    budgets {
+        uuid id PK
+        uuid userId FK "→ users.id"
+        uuid categoryId FK "nullable → categories.id"
+        decimal amount "precision 15,2"
+        enum period "daily | weekly | monthly"
+        date startDate
+    }
+
+    subscriptions {
+        uuid id PK
+        uuid userId FK "unique → users.id"
+        string stripeCustomerId
+        string stripeSubscriptionId
+        enum status "active | cancelled | past_due"
+        string plan "default premium"
+        date currentPeriodEnd
+    }
+
+    ai_conversations {
+        uuid id PK
+        uuid userId FK "→ users.id"
+        jsonb messages "role, content, timestamp"
+        timestamp createdAt
+    }
+```
+
+### Relationship Summary
+
+| From | → To | Type | FK Column | หมายเหตุ |
+|------|------|------|-----------|----------|
+| `transactions` | `users` | Many-to-One | `userId` | ทุก transaction ต้องมีเจ้าของ |
+| `transactions` | `categories` | Many-to-One | `categoryId` | จัดหมวดหมู่ |
+| `categories` | `users` | Many-to-One | `userId` (nullable) | `null` = default category ทุกคนเห็น |
+| `budgets` | `users` | Many-to-One | `userId` | งบของ user |
+| `budgets` | `categories` | Many-to-One | `categoryId` (nullable) | `null` = งบรวมทั้งเดือน |
+| `subscriptions` | `users` | One-to-One | `userId` (unique) | 1 user = 1 subscription |
+| `ai_conversations` | `users` | Many-to-One | `userId` | ประวัติ AI chat |
+
+---
 
 ### `users` table
 ```typescript
