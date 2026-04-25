@@ -146,192 +146,106 @@ Clone feature จาก [ป้านวล](https://app.parnuan.com) + เพ�
 
 ## 🗄 Database Schema (Draft — PostgreSQL + TypeORM)
 
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, Index, JoinColumn } from 'typeorm';
+
 ### `users` table
 ```typescript
-@Entity()
+@Entity('users')
 export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
-  @Column({ unique: true })
-  lineId: string;           // indexed
-
-  @Column()
-  displayName: string;
-
-  @Column({ nullable: true })
-  pictureUrl?: string;
-
-  @Column({ nullable: true })
-  email?: string;
-
-  @Column({ default: 'free' })
-  plan: 'free' | 'premium';
-
-  @Column({ default: 'THB' })
-  currency: string;
-
-  @Column({ default: 'Asia/Bangkok' })
-  timezone: string;
-
-  @Column({ default: 'th' })
-  language: 'th' | 'en';
-
-  @Column({ default: 0 })
-  streakCount: number;
-
-  @Column({ nullable: true })
-  lastActiveAt: Date;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-}
-```
+  @PrimaryGeneratedColumn('uuid') id: string;
+  @Index({ unique: true }) @Column({ unique: true }) lineId: string;
+  @Column() displayName: string;
+  @Column({ default: 'free' }) plan: string;
+  @CreateDateColumn() createdAt: Date;
 
 ### `transactions` table
-```typescript
-@Entity()
+@Entity('transactions')
 export class Transaction {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
-  @ManyToOne(() => User)
-  user: User;               // indexed
-
-  @Column()
-  type: 'income' | 'expense';
-
-  @Column('decimal', { precision: 15, scale: 2 })
-  amount: number;
-
-  @Column({ default: 'THB' })
-  currency: string;
-
-  @ManyToOne(() => Category)
-  category: Category;
-
-  @Column({ nullable: true })
-  note?: string;
-
-  @Column()
-  date: Date;               // indexed
-
-  @Column({ default: false })
-  isRecurring: boolean;
-
-  @Column({ default: false })
-  aiCategorized: boolean;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
+  @PrimaryGeneratedColumn('uuid') id: string;
+  @Index() @ManyToOne(() => User) user: User;
+  @ManyToOne(() => Category, { eager: true }) category: Category;
+  @Column({ type: 'numeric', precision: 15, scale: 2, transformer: {
+    to: (v: number) => v, from: (v: string) => parseFloat(v)
+  }}) amount: number;
+  @Column() type: string;
+  @Column({ nullable: true }) note?: string;
+  @Index() @Column({ type: 'timestamp' }) date: Date;
+  @Column({ default: false }) aiCategorized: boolean;
+  @CreateDateColumn() createdAt: Date;
 }
-```
 
 ### `categories` table
-```typescript
-@Entity()
+@Entity('categories')
 export class Category {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
-  @ManyToOne(() => User, { nullable: true })
-  user?: User;              // null = default category
-
-  @Column()
-  name: string;
-
-  @Column()
-  icon: string;
-
-  @Column()
-  color: string;
-
-  @Column()
-  type: 'income' | 'expense';
-
-  @Column({ default: false })
-  isDefault: boolean;
-}
-```
+  @PrimaryGeneratedColumn('uuid') id: string;
+  @ManyToOne(() => User, { nullable: true }) user?: User;
+  @Column() name: string;
+  @Column() icon: string;
+  @Column() color: string;
+  @Column() type: string; // income | expense
 
 ### `budgets` table
-```typescript
-@Entity()
+@Entity('budgets')
 export class Budget {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
-  @ManyToOne(() => User)
-  user: User;
-
-  @ManyToOne(() => Category, { nullable: true })
-  category?: Category;      // null = งบรวม
-
-  @Column('decimal', { precision: 15, scale: 2 })
-  amount: number;
-
-  @Column()
-  period: 'daily' | 'weekly' | 'monthly';
-
-  @Column()
-  startDate: Date;
+  @PrimaryGeneratedColumn('uuid') id: string;
+  @ManyToOne(() => User) user: User;
+  @ManyToOne(() => Category, { nullable: true }) category?: Category;
+  @Column({ type: 'numeric', precision: 15, scale: 2 }) amount: number;
+  @Column() period: string;
+  @Column({ type: 'date' }) startDate: Date;
 }
-```
 
-### `subscriptions` table
-```typescript
-@Entity()
-export class Subscription {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+// ### `subscriptions` table
+// ```typescript
+// @Entity()
+// export class Subscription {
+//   @PrimaryGeneratedColumn('uuid')
+//   id: string;
 
-  @OneToOne(() => User)
-  user: User;               // indexed
+//   @OneToOne(() => User)
+//   user: User;               // indexed
 
-  @Column()
-  stripeCustomerId: string;
+//   @Column()
+//   stripeCustomerId: string;
 
-  @Column()
-  stripeSubscriptionId: string;
+//   @Column()
+//   stripeSubscriptionId: string;
 
-  @Column()
-  status: 'active' | 'cancelled' | 'past_due';
+//   @Column()
+//   status: 'active' | 'cancelled' | 'past_due';
 
-  @Column({ default: 'premium' })
-  plan: string;
+//   @Column({ default: 'premium' })
+//   plan: string;
 
-  @Column()
-  currentPeriodEnd: Date;
-}
-```
+//   @Column()
+//   currentPeriodEnd: Date;
+// }
+// ```
 
 ### `ai_conversations` table
-```typescript
-@Entity()
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, JoinColumn } from 'typeorm';
+import { User } from './User';
+
+@Entity('ai_conversations')
 export class AiConversation {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @ManyToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @Column('jsonb')
+  // เก็บประวัติการคุยเป็น JSONB เพื่อความยืดหยุ่น (Role: user/assistant, Content, Timestamp)
+  @Column({ type: 'jsonb' })
   messages: Array<{
     role: 'user' | 'assistant';
     content: string;
     timestamp: Date;
   }>;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 }
-```
 
 ---
 

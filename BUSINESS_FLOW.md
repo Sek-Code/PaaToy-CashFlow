@@ -431,21 +431,22 @@ flowchart TD
 
 ## 6. API Endpoints Summary
 
-### Auth
+### Auth & User
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | `/api/auth/line` | LINE LIFF Login |
-| GET | `/api/auth/me` | Get current user |
+| POST | `/api/auth/login` | LINE LIFF Login |
+| GET | `/api/users/me` | Get current user |
+| PATCH | `/api/users/me` | Fix profile or setting |
 
 ### Transactions
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | `/api/transactions` | List (pagination, filter) |
 | POST | `/api/transactions` | Create |
-| PUT | `/api/transactions/:id` | Update |
+| PATCH | `/api/transactions/:id` | Update |
 | DELETE | `/api/transactions/:id` | Delete |
-| GET | `/api/transactions/summary` | Monthly summary |
-| GET | `/api/transactions/by-category` | Group by category |
+<!-- | GET | `/api/transactions/summary` | Monthly summary |
+| GET | `/api/transactions/by-category` | Group by category | -->
 
 ### Categories
 | Method | Endpoint | Description |
@@ -462,25 +463,25 @@ flowchart TD
 | POST | `/api/budgets` | Create |
 | PUT | `/api/budgets/:id` | Update |
 | DELETE | `/api/budgets/:id` | Delete |
-| GET | `/api/budgets/status` | Check budget usage |
+<!-- | GET | `/api/budgets/status` | Check budget usage | -->
 
 ### AI
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | POST | `/api/ai/chat` | AI Chat (Sonnet) |
-| POST | `/api/ai/categorize` | Auto categorize (Haiku) |
+| GET | `/api/ai/history` | Chat history |
 
-### Stripe
+<!-- ### Stripe
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | POST | `/api/stripe/checkout` | Create checkout session |
 | POST | `/api/stripe/webhook` | Handle Stripe events |
-| POST | `/api/stripe/portal` | Customer portal |
+| POST | `/api/stripe/portal` | Customer portal | -->
 
-### LINE Webhook
+<!-- ### LINE Webhook
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | `/api/webhook/line` | Receive LINE events |
+| POST | `/api/webhook/line` | Receive LINE events | -->
 
 ---
 
