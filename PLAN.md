@@ -249,8 +249,11 @@ export class User {
   @Column() displayName: string;
   @Column({ default: 'free' }) plan: string;
   @CreateDateColumn() createdAt: Date;
+}
+```
 
 ### `transactions` table
+```typescript
 @Entity('transactions')
 export class Transaction {
   @PrimaryGeneratedColumn('uuid') id: string;
@@ -265,8 +268,10 @@ export class Transaction {
   @Column({ default: false }) aiCategorized: boolean;
   @CreateDateColumn() createdAt: Date;
 }
+```
 
 ### `categories` table
+```typescript
 @Entity('categories')
 export class Category {
   @PrimaryGeneratedColumn('uuid') id: string;
@@ -275,8 +280,11 @@ export class Category {
   @Column() icon: string;
   @Column() color: string;
   @Column() type: string; // income | expense
+}
+```
 
 ### `budgets` table
+```typescript
 @Entity('budgets')
 export class Budget {
   @PrimaryGeneratedColumn('uuid') id: string;
@@ -286,48 +294,32 @@ export class Budget {
   @Column() period: string;
   @Column({ type: 'date' }) startDate: Date;
 }
+```
 
-// ### `subscriptions` table
-// ```typescript
-// @Entity()
-// export class Subscription {
-//   @PrimaryGeneratedColumn('uuid')
-//   id: string;
-
-//   @OneToOne(() => User)
-//   user: User;               // indexed
-
-//   @Column()
-//   stripeCustomerId: string;
-
-//   @Column()
-//   stripeSubscriptionId: string;
-
-//   @Column()
-//   status: 'active' | 'cancelled' | 'past_due';
-
-//   @Column({ default: 'premium' })
-//   plan: string;
-
-//   @Column()
-//   currentPeriodEnd: Date;
-// }
-// ```
+### `subscriptions` table
+```typescript
+@Entity()
+export class Subscription {
+  @PrimaryGeneratedColumn('uuid') id: string;
+  @OneToOne(() => User) user: User;
+  @Column() stripeCustomerId: string;
+  @Column() stripeSubscriptionId: string;
+  @Column() status: 'active' | 'cancelled' | 'past_due';
+  @Column({ default: 'premium' }) plan: string;
+  @Column() currentPeriodEnd: Date;
+}
+```
 
 ### `ai_conversations` table
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, JoinColumn } from 'typeorm';
-import { User } from './User';
-
+```typescript
 @Entity('ai_conversations')
 export class AiConversation {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn('uuid') id: string;
 
   @ManyToOne(() => User)
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  // เก็บประวัติการคุยเป็น JSONB เพื่อความยืดหยุ่น (Role: user/assistant, Content, Timestamp)
   @Column({ type: 'jsonb' })
   messages: Array<{
     role: 'user' | 'assistant';
@@ -335,9 +327,9 @@ export class AiConversation {
     timestamp: Date;
   }>;
 
-  @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
+  @CreateDateColumn({ name: 'created_at' }) createdAt: Date;
 }
+```
 
 ---
 
