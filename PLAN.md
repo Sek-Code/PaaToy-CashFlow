@@ -150,79 +150,76 @@ Clone feature จาก [ป้านวล](https://app.parnuan.com) + เพ�
 
 ```mermaid
 erDiagram
-    users ||--o{ transactions : "has many"
-    users ||--o{ categories : "has many (custom)"
-    users ||--o{ budgets : "has many"
-    users ||--o| subscriptions : "has one"
-    users ||--o{ ai_conversations : "has many"
-    categories ||--o{ transactions : "belongs to"
-    categories ||--o{ budgets : "belongs to (optional)"
+    USERS ||--o{ CATEGORIES : "owns"
+    USERS ||--o{ TRANSACTIONS : "records"
+    USERS ||--o{ BUDGETS : "sets"
+    CATEGORIES ||--o{ TRANSACTIONS : "classifies"
+    CATEGORIES ||--o| BUDGETS : "limits"
+    CURRENCIES ||--o{ USERS : "default for"
+    CURRENCIES ||--o{ TRANSACTIONS : "denominated in"
 
-    users {
-        uuid id PK
-        string lineId UK "indexed"
-        string displayName
-        string pictureUrl "nullable"
-        string email "nullable"
-        enum plan "free | premium"
-        string currency "default THB"
-        string timezone "default Asia/Bangkok"
-        enum language "th | en"
-        int streakCount
-        date lastActiveAt "nullable"
-        timestamp createdAt
-        timestamp updatedAt
+    USERS {
+        bigint id PK
+        varchar line_user_id UK "UNIQUE NOT NULL"
+        varchar line_picture_url "NULL"
+        text line_access_token "NULL"
+        timestamptz line_token_expires_at "NULL"
+        varchar display_name "e.g. Boat JS"
+        char_3 default_currency_code FK "default THB"
+        varchar timezone "default Asia/Bangkok"
+        varchar language "default th"
+        boolean dark_mode "default false"
+        timestamptz created_at
+        timestamptz updated_at
+        timestamptz deleted_at "soft delete"
     }
 
-    transactions {
-        uuid id PK
-        uuid userId FK "indexed → users.id"
-        enum type "income | expense"
-        decimal amount "precision 15,2"
-        string currency "default THB"
-        uuid categoryId FK "→ categories.id"
-        string note "nullable"
-        date date "indexed"
-        boolean isRecurring
-        boolean aiCategorized
-        timestamp createdAt
-        timestamp updatedAt
+    CATEGORIES {
+        bigint id PK
+        bigint user_id FK "NULL = system seed"
+        varchar name "e.g. ค่าอาหาร"
+        transaction_type type "income or expense"
+        varchar icon "icon key/emoji"
+        varchar color "hex color"
+        boolean is_system "seed default"
+        int sort_order
+        timestamptz created_at
+        timestamptz updated_at
+        timestamptz deleted_at
     }
 
-    categories {
-        uuid id PK
-        uuid userId FK "nullable → users.id"
-        string name
-        string icon
-        string color
-        enum type "income | expense"
-        boolean isDefault
+    TRANSACTIONS {
+        bigint id PK
+        bigint user_id FK "NOT NULL"
+        bigint category_id FK "NOT NULL"
+        transaction_type type "denormalized for speed"
+        numeric amount "NUMERIC(15,2) > 0"
+        char_3 currency_code FK "default THB"
+        text note "รายละเอียด"
+        timestamptz occurred_at "วันเวลาที่เกิดธุรกรรม"
+        timestamptz created_at
+        timestamptz updated_at
+        timestamptz deleted_at
     }
 
-    budgets {
-        uuid id PK
-        uuid userId FK "→ users.id"
-        uuid categoryId FK "nullable → categories.id"
-        decimal amount "precision 15,2"
-        enum period "daily | weekly | monthly"
-        date startDate
+    BUDGETS {
+        bigint id PK
+        bigint user_id FK "NOT NULL"
+        bigint category_id FK "NOT NULL UNIQUE per user"
+        numeric amount "NUMERIC(15,2) > 0"
+        budget_period period "daily/weekly/monthly"
+        smallint start_day_of_month "1-31 only for monthly"
+        smallint start_day_of_week "1-7 only for weekly"
+        boolean is_active
+        timestamptz created_at
+        timestamptz updated_at
     }
 
-    subscriptions {
-        uuid id PK
-        uuid userId FK "unique → users.id"
-        string stripeCustomerId
-        string stripeSubscriptionId
-        enum status "active | cancelled | past_due"
-        string plan "default premium"
-        date currentPeriodEnd
-    }
-
-    ai_conversations {
-        uuid id PK
-        uuid userId FK "→ users.id"
-        jsonb messages "role, content, timestamp"
-        timestamp createdAt
+    CURRENCIES {
+        char_3 code PK "ISO 4217 e.g. THB"
+        varchar name
+        varchar symbol "฿"
+        smallint decimal_digits "2"
     }
 ```
 
