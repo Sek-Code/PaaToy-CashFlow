@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PaaToy — Monthly Transactions Preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="preview-shared.css" />
+    <style>
+      .header-back {
+        display: flex;
+        align-items: center;
+        padding-top: 30px;
+        padding-left: 20px;
+        position: relative;
+      }
+      .back-btn {
+        position: absolute;
+        left: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .header-back h1 {
+        font-size: 20px;
+        font-weight: 600;
+        color: #1a1a1a;
+        width: 100%;
+        text-align: center;
+      }
+      .txn-list {
+        margin: 20px 19px 0;
+      }
+      .txn-card {
+        background: #fbe7eb;
+        border-radius: 5px;
+        padding: 12px 16px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+        box-shadow: 2px 2px 4px #e0e0e0;
+      }
+      .txn-card.income {
+        background: #e9e1f6;
+      }
+      .txn-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        flex-shrink: 0;
+        margin-right: 12px;
+        color: white;
+      }
+      .txn-icon.red { background: #d5485b; }
+      .txn-icon.purple { background: #483c76; }
+      
+      .txn-details {
+        flex: 1;
+      }
+      .txn-title {
+        font-size: 14px;
+        font-weight: 500;
+        color: #1a1a1a;
+      }
+      .txn-subtitle {
+        font-size: 11px;
+        color: #767b8e;
+        margin-top: 2px;
+      }
+      .txn-amount-wrap {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+      }
+      .txn-indicator {
+        width: 14px;
+        height: 14px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+      .txn-indicator.down { background: #d5485b; }
+      .txn-indicator.up { background: #d5485b; }
+      .txn-indicator.purple-down { background: #483c76; }
+      
+      .txn-amount {
+        font-size: 12px;
+        font-weight: 500;
+        color: #d5485b;
+      }
+      .txn-amount.purple {
+        color: #483c76;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="phone">
+      <!-- Close -->
+      <div class="btn-close">✕</div>
+
+      <!-- Header -->
+      <div class="header-back">
+        <div class="back-btn">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2">
+            <path d="M15 18l-6-6 6-6"/>
+          </svg>
+        </div>
+        <h1>เมษายน 2569</h1>
+      </div>
+
+      <div style="height: 680px; overflow-y: auto; padding-bottom: 80px; padding-top: 10px;">
+        <div class="txn-list">
+          
+          <div class="txn-card">
+            <div class="txn-icon red">🍽️</div>
+            <div class="txn-details">
+              <div class="txn-title">ค่าข้าวกลางวัน</div>
+              <div class="txn-subtitle">1/04/2569</div>
+            </div>
+            <div class="txn-amount-wrap">
+              <div class="txn-indicator down">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <div class="txn-amount">฿ 197.00</div>
+            </div>
+          </div>
+
+          <div class="txn-card">
+            <div class="txn-icon red">🍽️</div>
+            <div class="txn-details">
+              <div class="txn-title">ค่าข้าวกลางวัน</div>
+              <div class="txn-subtitle">2/04/2569<br/>สปาเกตตี้ + ไส้กรอก</div>
+            </div>
+            <div class="txn-amount-wrap">
+              <div class="txn-indicator up">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 15l-6-6-6 6"/></svg>
+              </div>
+              <div class="txn-amount">฿ 275.00</div>
+            </div>
+          </div>
+
+          <div class="txn-card income">
+            <div class="txn-icon purple">💼</div>
+            <div class="txn-details">
+              <div class="txn-title">เงินเดือน</div>
+              <div class="txn-subtitle">2/04/2569</div>
+            </div>
+            <div class="txn-amount-wrap">
+              <div class="txn-amount purple">฿ 35,000.00</div>
+            </div>
+          </div>
+
+          <div class="txn-card">
+            <div class="txn-icon red">🍽️</div>
+            <div class="txn-details">
+              <div class="txn-title">ค่าข้าวกลางวัน</div>
+              <div class="txn-subtitle">8/04/2569</div>
+            </div>
+            <div class="txn-amount-wrap">
+              <div class="txn-indicator down">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <div class="txn-amount">฿ 197.00</div>
+            </div>
+          </div>
+
+          <div class="txn-card">
+            <div class="txn-icon red">🍽️</div>
+            <div class="txn-details">
+              <div class="txn-title">ค่าข้าวกลางวัน</div>
+              <div class="txn-subtitle">12/04/2569<br/>สปาเกตตี้ + ไส้กรอก</div>
+            </div>
+            <div class="txn-amount-wrap">
+              <div class="txn-indicator up">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M18 15l-6-6-6 6"/></svg>
+              </div>
+              <div class="txn-amount">฿ 275.00</div>
+            </div>
+          </div>
+
+          <div class="txn-card">
+            <div class="txn-icon red">🍽️</div>
+            <div class="txn-details">
+              <div class="txn-title">ค่าข้าวกลางวัน</div>
+              <div class="txn-subtitle">16/04/2569</div>
+            </div>
+            <div class="txn-amount-wrap">
+              <div class="txn-indicator down">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <div class="txn-amount">฿ 197.00</div>
+            </div>
+          </div>
+
+          <div class="txn-card">
+            <div class="txn-icon red">🍽️</div>
+            <div class="txn-details">
+              <div class="txn-title">ค่าข้าวกลางวัน</div>
+              <div class="txn-subtitle">20/04/2569</div>
+            </div>
+            <div class="txn-amount-wrap">
+              <div class="txn-amount">฿ 197.00</div>
+            </div>
+          </div>
+
+          <div class="txn-card income">
+            <div class="txn-icon purple">💼</div>
+            <div class="txn-details">
+              <div class="txn-title">เงินเดือนรอบ 2</div>
+              <div class="txn-subtitle">22/04/2569</div>
+            </div>
+            <div class="txn-amount-wrap">
+              <div class="txn-indicator purple-down">
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg>
+              </div>
+              <div class="txn-amount purple">฿ 4,000.00</div>
+            </div>
+          </div>
+
+          <div class="txn-card income">
+            <div class="txn-icon purple">💼</div>
+            <div class="txn-details">
+              <div class="txn-title">เงินเดือนตกหล่น</div>
+              <div class="txn-subtitle">27/04/2569</div>
+            </div>
+            <div class="txn-amount-wrap">
+              <div class="txn-amount purple">฿ 1,200.00</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Bottom Nav -->
+      <div class="bottom-nav" style="position: absolute;">
+        <div class="nav-icons">
+          <div class="nav-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+            </svg>
+          </div>
+          <div class="nav-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M5 12h2v9H5zm6-7h2v16h-2zm6 4h2v12h-2z" />
+            </svg>
+          </div>
+          <div class="nav-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M11 2v10l8.9 5.1A10 10 0 0 1 11 2zm2 0a10 10 0 0 1 8.9 14.1L13 12V2z" />
+            </svg>
+          </div>
+          <div class="nav-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z" />
+            </svg>
+          </div>
+          <div class="nav-icon active">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C9.5 2 8 3.5 8 5c0 .6.2 1.2.5 1.7C6.4 7.7 5 9.7 5 12c0 3.9 3.1 7 7 7s7-3.1 7-7c0-2.3-1.4-4.3-3.5-5.3.3-.5.5-1.1.5-1.7 0-1.5-1.5-3-4-3zm0 2c1.1 0 2 .6 2 1s-.9 1-2 1-2-.6-2-1 .9-1 2-1zm0 3c2.8 0 5 2.2 5 5s-2.2 5-5 5-5-2.2-5-5 2.2-5 5-5zm0 2v1H9v2h3v1l3-2-3-2z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

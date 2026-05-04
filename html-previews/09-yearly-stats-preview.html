@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PaaToy — Yearly Stats Preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="preview-shared.css" />
+    <style>
+      .chart-container {
+        height: 180px;
+        margin: 10px 19px 0;
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #c8cddf;
+        position: relative;
+      }
+      .bar-group {
+        display: flex;
+        align-items: flex-end;
+        gap: 4px;
+        height: 100%;
+        width: 20px;
+      }
+      .bar-expense {
+        width: 8px;
+        background-color: #f0b4bd; 
+        border-radius: 2px 2px 0 0;
+      }
+      .bar-expense.high { background-color: #e68c98; }
+      .bar-income {
+        width: 8px;
+        background-color: #e9e1f6;
+        border-radius: 2px 2px 0 0;
+      }
+      .x-axis {
+        display: flex;
+        justify-content: space-between;
+        margin: 5px 19px 0;
+        font-size: 11px;
+        color: #1a1a1a;
+      }
+      .x-axis span {
+        width: 20px;
+        text-align: center;
+      }
+      .monthly-summary {
+        display: flex;
+        justify-content: space-between;
+        margin: 30px 19px 0;
+        text-align: center;
+      }
+      .monthly-summary > div {
+        flex: 1;
+      }
+      .monthly-label {
+        font-size: 12px;
+        color: #d5485b;
+      }
+      .monthly-label.income {
+        color: #483c76;
+      }
+      .monthly-expense {
+        font-size: 20px;
+        font-weight: 700;
+        color: #d5485b;
+        margin-top: 4px;
+      }
+      .monthly-income {
+        font-size: 20px;
+        font-weight: 700;
+        color: #483c76;
+        margin-top: 4px;
+      }
+      .balance-card {
+        margin: 20px 19px 0;
+        background: #e9e1f6;
+        border-radius: 5px;
+        padding: 24px 16px;
+        text-align: center;
+        box-shadow: 4px 4px 4px #c8cddf;
+      }
+      .balance-label {
+        font-size: 16px;
+        font-weight: 600;
+        color: #1a1a1a;
+      }
+      .balance-amount {
+        font-size: 28px;
+        font-weight: 700;
+        color: #483c76;
+        margin-top: 8px;
+      }
+      .details-card {
+        margin: 20px 19px 0;
+        background: #fcfcfc;
+        border: 1px solid #e0e0e0;
+        border-radius: 5px;
+        padding: 16px;
+        box-shadow: 2px 2px 4px #e0e0e0;
+      }
+      .details-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 12px;
+        font-size: 12px;
+      }
+      .details-row:last-child {
+        margin-bottom: 0;
+      }
+      .details-label {
+        color: #1a1a1a;
+      }
+      .details-value.red {
+        color: #d5485b;
+        font-weight: 600;
+      }
+      .details-value.purple {
+        color: #483c76;
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="phone">
+      <!-- Close -->
+      <div class="btn-close">✕</div>
+
+      <!-- Header -->
+      <div class="header" style="padding-top: 30px;">
+        <h1>สถิติการใช้จ่าย</h1>
+      </div>
+
+      <!-- Toggle -->
+      <div class="toggle-wrap" style="justify-content: flex-end; padding-right: 19px;">
+        <button class="toggle-btn">
+          <span>รายเดือน</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4" />
+          </svg>
+        </button>
+      </div>
+
+      <div style="height: 600px; overflow-y: auto; padding-bottom: 80px;">
+        <!-- Bar Chart 1 (Jan-Jun) -->
+        <div class="chart-container" style="margin-top: 20px;">
+          <div class="bar-group"><div class="bar-income" style="height: 70%;"></div><div class="bar-expense high" style="height: 60%;"></div></div>
+          <div class="bar-group"><div class="bar-income" style="height: 90%;"></div><div class="bar-expense" style="height: 40%;"></div></div>
+          <div class="bar-group"><div class="bar-income" style="height: 40%;"></div><div class="bar-expense high" style="height: 50%;"></div></div>
+          <div class="bar-group"><div class="bar-income" style="height: 60%;"></div><div class="bar-expense" style="height: 35%;"></div></div>
+          <div class="bar-group"><div class="bar-income" style="height: 40%;"></div><div class="bar-expense high" style="height: 75%;"></div></div>
+          <div class="bar-group"><div class="bar-income" style="height: 65%;"></div><div class="bar-expense" style="height: 60%;"></div></div>
+        </div>
+        <div class="x-axis">
+          <span>ม.ค.</span>
+          <span>ก.พ.</span>
+          <span>มี.ค.</span>
+          <span>เม.ย.</span>
+          <span>พ.ค.</span>
+          <span>มิ.ย.</span>
+        </div>
+
+        <!-- Bar Chart 2 (Jul-Dec) -->
+        <div class="chart-container" style="margin-top: 20px;">
+          <div class="bar-group"><div class="bar-income" style="height: 50%;"></div><div class="bar-expense" style="height: 45%;"></div></div>
+          <div class="bar-group"><div class="bar-income" style="height: 65%;"></div><div class="bar-expense" style="height: 30%;"></div></div>
+          <div class="bar-group"><div class="bar-income" style="height: 40%;"></div><div class="bar-expense high" style="height: 60%;"></div></div>
+          <div class="bar-group"><div class="bar-income" style="height: 55%;"></div><div class="bar-expense" style="height: 40%;"></div></div>
+          <div class="bar-group"><div class="bar-income" style="height: 45%;"></div><div class="bar-expense high" style="height: 85%;"></div></div>
+          <div class="bar-group"><div class="bar-income" style="height: 70%;"></div><div class="bar-expense" style="height: 45%;"></div></div>
+        </div>
+        <div class="x-axis">
+          <span>ก.ค.</span>
+          <span>ส.ค.</span>
+          <span>ก.ย.</span>
+          <span>ต.ค.</span>
+          <span>พ.ย.</span>
+          <span>ธ.ค.</span>
+        </div>
+
+        <!-- Monthly Summary -->
+        <div class="monthly-summary">
+          <div>
+            <div class="monthly-label">รายจ่ายสะสม</div>
+            <div class="monthly-expense">฿ 19,514.00</div>
+          </div>
+          <div>
+            <div class="monthly-label income">รายรับสะสม</div>
+            <div class="monthly-income">฿ 50,000.00</div>
+          </div>
+        </div>
+
+        <!-- Balance Card -->
+        <div class="balance-card">
+          <div class="balance-label">ยอดคงเหลือ</div>
+          <div class="balance-amount">฿ 30,486.00</div>
+        </div>
+
+        <!-- Details Card -->
+        <div class="details-card">
+          <div class="details-row">
+            <span class="details-label">ระยะเวลาทั้งหมด</span>
+            <span class="details-value red">47 วัน</span>
+          </div>
+          <div class="details-row">
+            <span class="details-label">รายการรายจ่ายทั้งหมด</span>
+            <span class="details-value red">480 รายการ</span>
+          </div>
+          <div class="details-row">
+            <span class="details-label">รายการรายรับทั้งหมด</span>
+            <span class="details-value purple">32 รายการ</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Nav -->
+      <div class="bottom-nav" style="position: absolute;">
+        <div class="nav-icons">
+          <div class="nav-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+            </svg>
+          </div>
+          <div class="nav-icon active">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M5 12h2v9H5zm6-7h2v16h-2zm6 4h2v12h-2z" />
+            </svg>
+          </div>
+          <div class="nav-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M11 2v10l8.9 5.1A10 10 0 0 1 11 2zm2 0a10 10 0 0 1 8.9 14.1L13 12V2z" />
+            </svg>
+          </div>
+          <div class="nav-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z" />
+            </svg>
+          </div>
+          <div class="nav-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C9.5 2 8 3.5 8 5c0 .6.2 1.2.5 1.7C6.4 7.7 5 9.7 5 12c0 3.9 3.1 7 7 7s7-3.1 7-7c0-2.3-1.4-4.3-3.5-5.3.3-.5.5-1.1.5-1.7 0-1.5-1.5-3-4-3zm0 2c1.1 0 2 .6 2 1s-.9 1-2 1-2-.6-2-1 .9-1 2-1zm0 3c2.8 0 5 2.2 5 5s-2.2 5-5 5-5-2.2-5-5 2.2-5 5-5zm0 2v1H9v2h3v1l3-2-3-2z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
