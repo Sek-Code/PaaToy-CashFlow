@@ -1,7 +1,11 @@
-﻿* {
+* {
         box-sizing: border-box;
         margin: 0;
         padding: 0;
+      }
+
+      button, input, select, textarea {
+        font-family: inherit;
       }
 
       body {
@@ -17,7 +21,7 @@
       /* โ”€โ”€ Phone shell โ”€โ”€ */
       .phone {
         width: 393px;
-        min-height: 852px;
+        height: 852px;
         background: #f5f6f7;
         border-radius: 40px;
         overflow: hidden;
@@ -48,7 +52,7 @@
       }
       .header h1 {
         font-size: 20px;
-        font-weight: 600;
+        font-weight: 700;
         color: #1a1a1a;
       }
       .balance {
