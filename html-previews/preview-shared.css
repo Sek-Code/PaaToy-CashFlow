@@ -1,0 +1,283 @@
+﻿* {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background: #e0e0e0;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+        padding: 32px 16px;
+        font-family: "IBM Plex Sans Thai", sans-serif;
+      }
+
+      /* โ”€โ”€ Phone shell โ”€โ”€ */
+      .phone {
+        width: 393px;
+        min-height: 852px;
+        background: #f5f6f7;
+        border-radius: 40px;
+        overflow: hidden;
+        position: relative;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.25);
+      }
+
+      /* โ”€โ”€ Close button โ”€โ”€ */
+      .btn-close {
+        position: absolute;
+        top: 13px;
+        right: 16px;
+        width: 34px;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: #767b8e;
+        font-size: 20px;
+        font-weight: 600;
+      }
+
+      /* โ”€โ”€ Header โ”€โ”€ */
+      .header {
+        text-align: center;
+        padding-top: 53px;
+      }
+      .header h1 {
+        font-size: 20px;
+        font-weight: 600;
+        color: #1a1a1a;
+      }
+      .balance {
+        font-size: 36px;
+        font-weight: 700;
+        color: #c1ade0;
+        margin-top: 8px;
+      }
+
+      /* โ”€โ”€ Toggle โ”€โ”€ */
+      .toggle-wrap {
+        display: flex;
+        justify-content: center;
+        margin-top: 16px;
+      }
+      .toggle-btn {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 4px 15px;
+        height: 27px;
+        background: #f5f6f7;
+        border: 1px solid #c8cddf;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .toggle-btn span {
+        font-size: 14px;
+        font-weight: 500;
+        color: #767b8e;
+      }
+      .toggle-btn svg {
+        width: 17px;
+        height: 17px;
+        color: #767b8e;
+      }
+
+      /* โ”€โ”€ Summary cards โ”€โ”€ */
+      .summary-cards {
+        display: flex;
+        gap: 5px;
+        margin: 20px 19px 0;
+      }
+      .card-expense,
+      .card-income {
+        flex: 1;
+        height: 83px;
+        border-radius: 5px;
+        padding: 12px 14px;
+        box-shadow: 4px 4px 4px #c8cddf;
+      }
+      .card-expense {
+        background: #fbe7eb;
+      }
+      .card-income {
+        background: #e9e1f6;
+      }
+
+      .card-expense .card-label {
+        font-size: 12px;
+        color: #d5485b;
+      }
+      .card-income .card-label {
+        font-size: 12px;
+        color: #483c76;
+      }
+
+      .card-expense .card-amount {
+        font-size: 20px;
+        font-weight: 700;
+        color: #d5485b;
+        margin-top: 6px;
+      }
+      .card-income .card-amount {
+        font-size: 20px;
+        font-weight: 700;
+        color: #483c76;
+        margin-top: 6px;
+      }
+
+      /* โ”€โ”€ Main card โ”€โ”€ */
+      .main-card {
+        margin: 10px 19px 0;
+        background: #f5f6f7;
+        border-radius: 5px;
+        box-shadow: 0px 0px 4px #c8cddf;
+        padding: 20px 16px 20px;
+      }
+      .main-card-title {
+        font-size: 16px;
+        font-weight: 500;
+        color: #1a1a1a;
+        text-align: center;
+        text-decoration: underline;
+        margin-bottom: 16px;
+      }
+
+      /* โ”€โ”€ Chart + stats row โ”€โ”€ */
+      .chart-stats-row {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .donut-wrap {
+        flex-shrink: 0;
+        width: 160px;
+        height: 160px;
+      }
+      .donut-wrap svg {
+        width: 100%;
+        height: 100%;
+      }
+
+      .stats-col {
+        flex: 1;
+      }
+      .stat-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      .stat-label {
+        font-size: 11px;
+        color: #1a1a1a;
+      }
+      .stat-value {
+        font-size: 11px;
+        font-weight: 700;
+        color: #d5485b;
+      }
+
+      /* โ”€โ”€ Category list โ”€โ”€ */
+      .category-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px 0;
+        margin-top: 20px;
+      }
+      .cat-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .cat-icon {
+        width: 33px;
+        height: 33px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        flex-shrink: 0;
+      }
+      .cat-icon.pink {
+        background: #fbe7eb;
+      }
+      .cat-icon.purple {
+        background: #e9e1f6;
+      }
+      .cat-icon.blue {
+        background: #e1eaf6;
+      }
+      .cat-icon.orange {
+        background: #fdf0e7;
+      }
+      .cat-icon.green {
+        background: #e7f6ec;
+      }
+
+      .cat-amount {
+        font-size: 11px;
+        font-weight: 500;
+        color: #1a1a1a;
+      }
+
+      /* โ”€โ”€ Action button โ”€โ”€ */
+      .btn-edit-wrap {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+      }
+      .btn-edit {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: 307px;
+        height: 35px;
+        background: #fbe7eb;
+        border: 1px solid #d5485b;
+        border-radius: 5px;
+        filter: drop-shadow(4px 4px 2px #c8cddf);
+        cursor: pointer;
+        font-size: 11px;
+        font-weight: 500;
+        color: #d5485b;
+        font-family: "IBM Plex Sans Thai", sans-serif;
+      }
+
+      /* โ”€โ”€ Bottom Nav โ”€โ”€ */
+      .bottom-nav {
+        position: sticky;
+        bottom: 0;
+        width: 393px;
+        height: 62px;
+        background: #f5f6f7;
+        box-shadow: 0px -2px 11px #c8cddf;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 24px;
+      }
+      .nav-icons {
+        display: flex;
+        align-items: center;
+        gap: 45px;
+      }
+      .nav-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: #767b8e;
+      }
+      .nav-icon.active {
+        color: #d5485b;
+      }
+      .nav-icon svg {
+        width: 28px;
+        height: 28px;
+      }
