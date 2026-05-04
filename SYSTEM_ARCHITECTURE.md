@@ -70,6 +70,7 @@ erDiagram
         uuid category_id FK
         varchar type "income | expense"
         numeric amount "NUMERIC(15,2)"
+        varchar currency_code "e.g. THB, USD"
         text note "Nullable"
         timestamptz date "Transaction Date"
         boolean ai_categorized "Flag if AI guessed it"
@@ -117,6 +118,7 @@ erDiagram
         uuid category_id FK
         varchar type "income | expense"
         numeric amount
+        varchar currency_code "e.g. THB, USD"
         text note
         varchar frequency "daily | weekly | monthly"
         date next_run_date
