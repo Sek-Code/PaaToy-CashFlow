@@ -53,8 +53,7 @@
   --text-sub-1: 20px;
   --text-sub-2: 16px;
   --text-sub-3: 12px;
-  --text-body: 14px;
-  --text-tiny: 11px;
+  --text-body: 11px;
   --color-income-icon: var(--income-color-3);
   --color-expense-icon: var(--expense-color-3);
   --color-income-bg: var(--income-color-1);
@@ -172,5 +171,8 @@
   }
   h3 {
     @apply text-sub-2 font-medium;
+  }
+  p {
+    @apply text-body;
   }
 }
