@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
-import { HomeIcon, StatIcon, CategoryIcon, TransactionIcon, BudgetIcon } from "./icons/Icon";
+import { HomeIcon, StatIcon, CategoryIcon, TransactionIcon, BudgetIcon } from "./icons/NavBarIcon";
 
 type Props = {};
 
