@@ -47,7 +47,7 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
-  --color-navbar-active: var(--income-color-3);
+  --color-navbar-active: var(--income-color-main);
   --color-navbar-inactive: var(--inactive-navbar-icon);
   --text-head: 36px;
   --text-sub-1: 20px;
@@ -55,14 +55,14 @@
   --text-sub-3: 12px;
   --text-body: 11px;
   --text-toggle: 14px;
-  --color-income-icon: var(--income-color-3);
-  --color-expense-icon: var(--expense-color-3);
-  --color-income-bg: var(--income-color-1);
-  --color-expense-bg: var(--expense-color-1);
-  --color-income-chart: var(--income-color-2);
-  --color-expense-chart: var(--expense-color-2);
-  --color-income-text: var(--income-color-3);
-  --color-expense-text: var(--expense-color-3);
+  --color-income-icon: var(--income-color-main);
+  --color-expense-icon: var(--expense-color-main);
+  --color-income-bg: var(--income-color-bg);
+  --color-expense-bg: var(--expense-color-bg);
+  --color-income-chart: var(--income-color-sub);
+  --color-expense-chart: var(--expense-color-sub);
+  --color-income-text: var(--income-color-main);
+  --color-expense-text: var(--expense-color-main);
 }
 
 :root {
@@ -99,14 +99,14 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   --inactive-navbar-icon: #c8cddf;
-  --income-color-bg: #E9E1F6;
-  --expense-color-bg: #FBE7EB;
-  --income-color-sub: #C8B3E6;
-  --expense-color-sub: #EB9FA5;
-  --income-color-main: #483C76;
-  --expense-color-main: #D5485B;
-  --neutral-color-bg: #F5F6F7;
-  --neutral-color-sub: #767B8E;  
+  --income-color-bg: #e9e1f6;
+  --expense-color-bg: #fbe7eb;
+  --income-color-sub: #c8b3e6;
+  --expense-color-sub: #eb9fa5;
+  --income-color-main: #483c76;
+  --expense-color-main: #d5485b;
+  --neutral-color-bg: #f5f6f7;
+  --neutral-color-sub: #767b8e;
   --neutral-color-main: #000000;
 }
 
@@ -143,15 +143,15 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
   --inactive-navbar-icon: #c8cddf;
-  --income-color-1: #E9E1F6;
-  --expense-color-1: #FBE7EB;
-  --income-color-2: #C8B3E6;
-  --expense-color-2: #EB9FA5;
-  --income-color-3: #483C76;
-  --expense-color-3: #D5485B;
-  --neutral-color-1: #F5F6F7;
-  --neutral-color-2: #767B8E;  
-  --neutral-color-3: #000000;
+  --income-color-bg: #e9e1f6;
+  --expense-color-bg: #fbe7eb;
+  --income-color-sub: #c8b3e6;
+  --expense-color-sub: #eb9fa5;
+  --income-color-main: #483c76;
+  --expense-color-main: #d5485b;
+  --neutral-color-bg: #f5f6f7;
+  --neutral-color-sub: #767b8e;
+  --neutral-color-main: #000000;
 }
 
 @layer base {
