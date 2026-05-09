@@ -48,7 +48,7 @@
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
   --color-navbar-active: var(--income-color-main);
-  --color-navbar-inactive: var(--inactive-navbar-icon);
+  --color-navbar-inactive: var(--custom-grey);
   --text-head: 36px;
   --text-sub-1: 20px;
   --text-sub-2: 16px;
@@ -59,10 +59,14 @@
   --color-expense-icon: var(--expense-color-main);
   --color-income-bg: var(--income-color-bg);
   --color-expense-bg: var(--expense-color-bg);
+  --color-neutral-bg: var(--neutral-color-bg);
+  --color-neutral-sub: var(--neutral-color-sub);
+  --color-neutral-main: var(--neutral-color-main);
   --color-income-chart: var(--income-color-sub);
   --color-expense-chart: var(--expense-color-sub);
   --color-income-text: var(--income-color-main);
   --color-expense-text: var(--expense-color-main);
+  --shadow-box: 0 0 4px 0 var(--custom-grey), 4px 4px 4px 0 var(--custom-grey);
 }
 
 :root {
@@ -98,7 +102,7 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  --inactive-navbar-icon: #c8cddf;
+  --custom-grey: #c8cddf;
   --income-color-bg: #e9e1f6;
   --expense-color-bg: #fbe7eb;
   --income-color-sub: #c8b3e6;
@@ -142,7 +146,7 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
-  --inactive-navbar-icon: #c8cddf;
+  --custom-grey: #c8cddf;
   --income-color-bg: #e9e1f6;
   --expense-color-bg: #fbe7eb;
   --income-color-sub: #c8b3e6;
