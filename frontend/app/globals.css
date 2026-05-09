@@ -1,8 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@100;200;300;400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@100;200;300;400;500;600;700&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
-
 
 @custom-variant dark (&:is(.dark *));
 
@@ -48,8 +47,22 @@
   --radius-2xl: calc(var(--radius) * 1.8);
   --radius-3xl: calc(var(--radius) * 2.2);
   --radius-4xl: calc(var(--radius) * 2.6);
-  --color-navbar-active: var(--active-navbar-icon);
+  --color-navbar-active: var(--income-color-3);
   --color-navbar-inactive: var(--inactive-navbar-icon);
+  --text-head: 36px;
+  --text-sub-1: 20px;
+  --text-sub-2: 16px;
+  --text-sub-3: 12px;
+  --text-body: 14px;
+  --text-tiny: 11px;
+  --color-income-icon: var(--income-color-3);
+  --color-expense-icon: var(--expense-color-3);
+  --color-income-bg: var(--income-color-1);
+  --color-expense-bg: var(--expense-color-1);
+  --color-income-chart: var(--income-color-2);
+  --color-expense-chart: var(--expense-color-2);
+  --color-income-text: var(--income-color-3);
+  --color-expense-text: var(--expense-color-3);
 }
 
 :root {
@@ -85,8 +98,16 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  --active-navbar-icon: #483C76;
-  --inactive-navbar-icon: #C8CDDF;
+  --inactive-navbar-icon: #c8cddf;
+  --income-color-bg: #E9E1F6;
+  --expense-color-bg: #FBE7EB;
+  --income-color-sub: #C8B3E6;
+  --expense-color-sub: #EB9FA5;
+  --income-color-main: #483C76;
+  --expense-color-main: #D5485B;
+  --neutral-color-bg: #F5F6F7;
+  --neutral-color-sub: #767B8E;  
+  --neutral-color-main: #000000;
 }
 
 .dark {
@@ -121,8 +142,16 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
-  --active-navbar-icon: #483C76;
-  --inactive-navbar-icon: #C8CDDF;
+  --inactive-navbar-icon: #c8cddf;
+  --income-color-1: #E9E1F6;
+  --expense-color-1: #FBE7EB;
+  --income-color-2: #C8B3E6;
+  --expense-color-2: #EB9FA5;
+  --income-color-3: #483C76;
+  --expense-color-3: #D5485B;
+  --neutral-color-1: #F5F6F7;
+  --neutral-color-2: #767B8E;  
+  --neutral-color-3: #000000;
 }
 
 @layer base {
@@ -134,5 +163,14 @@
   }
   html {
     font-family: "IBM Plex Sans Thai", sans-serif;
+  }
+  h1 {
+    @apply text-head font-bold;
+  }
+  h2 {
+    @apply text-sub-1 font-bold;
+  }
+  h3 {
+    @apply text-sub-2 font-medium;
   }
 }
