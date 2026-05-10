@@ -5,10 +5,12 @@ import { CategoryIcon } from './CategoryIcon';
 export type CategoryData = {
   categoryName: string;
   amount: number;
+  categoryIconName?: string;
 };
 
 type Props = {
   data: CategoryData[];
+  category: "income" | "expense";
 }
 
 //type expenseDatas = { categoryName: string; amount: number };
@@ -21,27 +23,27 @@ type Props = {
 //   { categoryName: "others", amount: 1463.0 },
 // ];
 
-export function CategorySummaryBox({data}: Props) {
+export function CategorySummaryBox({data, category}: Props) {
   return (
-            <Box className="mx-5">
-              <p className="font-medium underline text-center pt-5 text-sub-2">
-                รายจ่าย
-              </p>
-              <div
-                id="expenseData"
-                className="grid grid-cols-2 justify-items-center"
-              >
-                {data.map((data) => (
-                  <div className="flex items-center m-5">
-                    <CategoryIcon
-                      icon={`/category-icon/${data.categoryName}.svg`}
-                      category="expense"
-                      className="mr-6"
-                    />
-                    <p className="text-body font-medium">฿ {data.amount}</p>
-                  </div>
-                ))}
-              </div>
-            </Box>
-  )
+    <Box className="m-5">
+      <p className="font-medium underline text-center pt-5 text-sub-2">
+        {category === "income" ? "รายรับ" : "รายจ่าย"}
+      </p>
+      <div
+        id="CategoryData"
+        className="grid grid-cols-2 gap-y-5 py-5 px-10 gap-x-13"
+      >
+        {data.map((data) => (
+          <div className="flex items-center ">
+            <CategoryIcon
+              icon={`/category-icon/${data.categoryIconName}.svg`}
+              category={category}
+              className="mr-6"
+            />
+            <p className="text-body font-medium">฿ {data.amount}</p>
+          </div>
+        ))}
+      </div>
+    </Box>
+  );
 }
