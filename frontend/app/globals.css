@@ -49,6 +49,8 @@
   --radius-4xl: calc(var(--radius) * 2.6);
   --color-navbar-active: var(--income-color-main);
   --color-navbar-inactive: var(--custom-grey);
+  --color-input-line: var(--custom-grey);
+  --color-custom-grey: var(--custom-grey);
   --text-head: 36px;
   --text-sub-1: 20px;
   --text-sub-2: 16px;
@@ -67,6 +69,7 @@
   --color-income-text: var(--income-color-main);
   --color-expense-text: var(--expense-color-main);
   --shadow-box: 0 0 4px 0 var(--custom-grey), 4px 4px 4px 0 var(--custom-grey);
+  --shadow-focus: 0 0 4px 1px var(--color-neutral-sub);
 }
 
 :root {
@@ -167,6 +170,9 @@
   }
   html {
     font-family: "IBM Plex Sans Thai", sans-serif;
+    margin: 0 auto;
+    max-width: 1024px;
+    background-color: var(--destructive);
   }
   h1 {
     @apply text-head font-bold;

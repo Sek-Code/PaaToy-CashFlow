@@ -13,9 +13,9 @@ type Props = {
   category: "income" | "expense";
 }
 
-//type expenseDatas = { categoryName: string; amount: number };
+//type data = { categoryName: string; amount: number };
 
-// const expenseDatas: expenseDatas[] = [
+// const data: expenseDatas[] = [
 //   { categoryName: "food", amount: 4897.0 },
 //   { categoryName: "shopping", amount: 2907.0 },
 //   { categoryName: "wifi", amount: 4625.0 },
@@ -31,14 +31,17 @@ export function CategorySummaryBox({data, category}: Props) {
       </p>
       <div
         id="CategoryData"
-        className="grid grid-cols-2 gap-y-5 py-5 px-10 gap-x-13"
+        className="grid grid-cols-2 gap-y-5 pt-5 pb-10 px-10 gap-x-10"
       >
         {data.map((data) => (
-          <div className="flex items-center ">
+          <div
+            className="flex items-center justify-between"
+            key={data.categoryName}
+          >
             <CategoryIcon
               icon={`/category-icon/${data.categoryIconName}.svg`}
               category={category}
-              className="mr-6"
+              className="mr-1"
             />
             <p className="text-body font-medium">฿ {data.amount}</p>
           </div>

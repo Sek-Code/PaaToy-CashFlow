@@ -1,9 +1,6 @@
-'use client'
-import React from "react";
-import { RaiRab } from "@/components/ui/RaiRub";
-import { CategoryIcon } from "@/components/ui/CategoryIcon";
+"use client";
+import React, { useState } from "react";
 import { Box } from "@/components/ui/Box";
-import { Cat } from "lucide-react";
 import {
   CategorySummaryBox,
   CategoryData,
@@ -20,7 +17,7 @@ const expenseData: CategoryData[] = [
   { categoryName: "wifi", amount: 4625.0, categoryIconName: "wifi" },
   {
     categoryName: "transportation",
-    amount: 3709.0,
+    amount: 370900.0,
     categoryIconName: "transportation",
   },
   { categoryName: "others", amount: 1463.0, categoryIconName: "other" },
@@ -45,15 +42,16 @@ const balance: number =
   expenseData.reduce((sum, data) => sum + data.amount, 0);
 const balanceCategory: "income" | "expense" =
   balance >= 0 ? "income" : "expense";
-  const balanceColor = `text-${balanceCategory}-text`;
+const balanceColor = `text-${balanceCategory}-text`;
 
-export default function Category({}: Props) {
+export default function Category({ }: Props) {
+  
   return (
-    <div className="max-w-[1024px] mx-auto">
+    <div className="mx-auto max-w-5xl">
       <h1 className="text-center text-sub-1 mt-13 mb-5 mx-19">
         รายรับ-รายจ่ายตามประเภท
       </h1>
-      <EditButton> เพิ่มข้อมูล</EditButton>
+      <EditButton>เพิ่มข้อมูล</EditButton>
       <CategorySummaryBox data={expenseData} category="expense" />
       <CategorySummaryBox data={incomeData} category="income" />
       <Box category={balanceCategory} className="m-5 p-4 text-center">
