@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PaaToy — Statistic Preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="preview-shared.css" />
+  </head>
+  <body>
+    <div class="phone">
+      <!-- Close -->
+      <div class="btn-close">✕</div>
+
+      <!-- Header -->
+      <div class="header">
+        <h1>ยอดคงเหลือ</h1>
+        <div class="balance">฿ 18,399.00</div>
+      </div>
+
+      <!-- Toggle -->
+      <div class="toggle-wrap">
+        <button class="toggle-btn">
+          <span>ยอดเดือนนี้</span>
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M7 16V4m0 0L3 8m4-4l4 4M17 8v12m0 0l4-4m-4 4l-4-4" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Summary cards -->
+      <div class="summary-cards">
+        <div class="card-expense">
+          <div class="card-label">รายจ่ายเดือนนี้</div>
+          <div class="card-amount">฿ 17,601.00</div>
+        </div>
+        <div class="card-income">
+          <div class="card-label">รายรับเดือนนี้</div>
+          <div class="card-amount">฿ 38,000.00</div>
+        </div>
+      </div>
+
+      <div style="height: 480px; overflow-y: auto; padding-bottom: 80px;">
+        <!-- Main card 1: Expenses -->
+        <div class="main-card">
+          <div class="main-card-title">สรุปรายจ่ายเดือนนี้</div>
+
+          <!-- Donut + stats -->
+          <div class="chart-stats-row">
+            <div class="donut-wrap">
+              <svg viewBox="0 0 160 160">
+                <circle cx="80" cy="80" r="60" fill="none" stroke="#f0f0f0" stroke-width="28" />
+                <!-- segments -->
+                <circle cx="80" cy="80" r="60" fill="none" stroke="#d5485b" stroke-width="28" stroke-dasharray="100 277" stroke-dashoffset="47" />
+                <circle cx="80" cy="80" r="60" fill="none" stroke="#e9a0aa" stroke-width="28" stroke-dasharray="80 297" stroke-dashoffset="-53" />
+                <circle cx="80" cy="80" r="60" fill="none" stroke="#fbe7eb" stroke-width="28" stroke-dasharray="60 317" stroke-dashoffset="-133" />
+              </svg>
+            </div>
+            <!-- Stats -->
+            <div class="stats-col">
+              <div class="stat-row">
+                <span class="stat-label">ระยะเวลาทั้งหมด</span>
+                <span class="stat-value">31 วัน</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-label">รายการทั้งหมด</span>
+                <span class="stat-value">67 รายการ</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category list -->
+          <div class="category-grid">
+            <div class="cat-item">
+              <div class="cat-icon" style="background:#d5485b; color:white;">🍽️</div>
+              <span class="cat-amount">฿ 4,897.00</span>
+            </div>
+            <div class="cat-item">
+              <div class="cat-icon" style="background:#f0b4bd; color:white;">🛍️</div>
+              <span class="cat-amount">฿ 2,907.00</span>
+            </div>
+            <div class="cat-item">
+              <div class="cat-icon" style="background:#e68c98; color:white;">📶</div>
+              <span class="cat-amount">฿ 4,625.00</span>
+            </div>
+            <div class="cat-item">
+              <div class="cat-icon" style="background:#f45c71; color:white;">⋯</div>
+              <span class="cat-amount">฿ 1,463.00</span>
+            </div>
+            <div class="cat-item">
+              <div class="cat-icon" style="background:#fbe7eb; color:#d5485b;">🧳</div>
+              <span class="cat-amount">฿ 3,709.00</span>
+            </div>
+          </div>
+
+          <!-- Edit button -->
+          <div class="btn-edit-wrap">
+            <button class="btn-edit">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d5485b" stroke-width="2">
+                <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+              </svg>
+              แก้ไขข้อมูล
+            </button>
+          </div>
+        </div>
+
+        <!-- Main card 2: Income -->
+        <div class="main-card">
+          <div class="main-card-title" style="color: #483c76; border-bottom-color: #483c76;">สรุปรายรับเดือนนี้</div>
+
+          <!-- Donut + stats -->
+          <div class="chart-stats-row">
+            <div class="donut-wrap">
+              <svg viewBox="0 0 160 160">
+                <circle cx="80" cy="80" r="60" fill="none" stroke="#f0f0f0" stroke-width="28" />
+                <!-- segments -->
+                <circle cx="80" cy="80" r="60" fill="none" stroke="#483c76" stroke-width="28" stroke-dasharray="180 197" stroke-dashoffset="47" />
+                <circle cx="80" cy="80" r="60" fill="none" stroke="#e9e1f6" stroke-width="28" stroke-dasharray="80 297" stroke-dashoffset="-133" />
+              </svg>
+            </div>
+            <!-- Stats -->
+            <div class="stats-col">
+              <div class="stat-row">
+                <span class="stat-label">ระยะเวลาทั้งหมด</span>
+                <span class="stat-value" style="color: #483c76;">31 วัน</span>
+              </div>
+              <div class="stat-row">
+                <span class="stat-label">รายการทั้งหมด</span>
+                <span class="stat-value" style="color: #483c76;">27 รายการ</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Category list -->
+          <div class="category-grid">
+            <div class="cat-item">
+              <div class="cat-icon" style="background:#483c76; color:white;">💼</div>
+              <span class="cat-amount">฿ 35,000.00</span>
+            </div>
+            <div class="cat-item">
+              <div class="cat-icon" style="background:#c1ade0; color:white;">📂</div>
+              <span class="cat-amount">฿ 800.00</span>
+            </div>
+            <div class="cat-item">
+              <div class="cat-icon" style="background:#e9e1f6; color:#483c76;">🎨</div>
+              <span class="cat-amount">฿ 2,200.00</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Nav -->
+      <div class="bottom-nav" style="position: absolute;">
+        <div class="nav-icons">
+          <div class="nav-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+            </svg>
+          </div>
+          <div class="nav-icon active">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M5 12h2v9H5zm6-7h2v16h-2zm6 4h2v12h-2z" />
+            </svg>
+          </div>
+          <div class="nav-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M11 2v10l8.9 5.1A10 10 0 0 1 11 2zm2 0a10 10 0 0 1 8.9 14.1L13 12V2z" />
+            </svg>
+          </div>
+          <div class="nav-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z" />
+            </svg>
+          </div>
+          <div class="nav-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C9.5 2 8 3.5 8 5c0 .6.2 1.2.5 1.7C6.4 7.7 5 9.7 5 12c0 3.9 3.1 7 7 7s7-3.1 7-7c0-2.3-1.4-4.3-3.5-5.3.3-.5.5-1.1.5-1.7 0-1.5-1.5-3-4-3zm0 2c1.1 0 2 .6 2 1s-.9 1-2 1-2-.6-2-1 .9-1 2-1zm0 3c2.8 0 5 2.2 5 5s-2.2 5-5 5-5-2.2-5-5 2.2-5 5-5zm0 2v1H9v2h3v1l3-2-3-2z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

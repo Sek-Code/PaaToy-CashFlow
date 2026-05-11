@@ -70,6 +70,9 @@ web_modules/
 .env.*
 !.env.example
 
+# Figma API data folder (raw data, images — ไม่ต้อง commit)
+figma/
+
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache
@@ -124,6 +127,9 @@ dist
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
+
+# VSCode editor settings (local only)
+.vscode/
 
 # yarn v3
 .pnp.*
