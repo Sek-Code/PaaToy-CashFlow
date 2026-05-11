@@ -23,7 +23,7 @@ export default function NavBar({}: Props) {
   const pathname = usePathname();
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 px-9.5 py-4 bg-white">
+    <div className="fixed bottom-0 left-0 right-0 px-9.5 py-4 max-h-[62px] bg-white">
       <div className="flex gap-11 justify-center bg-white">
         {navItems.map((item: NavItem) => {
         const { Icon } = item;
