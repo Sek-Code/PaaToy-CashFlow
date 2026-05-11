@@ -31,12 +31,9 @@ export function EditButton({ children }: Props) {
       </Box>
 
       {isOpen && (
-        <div className="fixed inset-0 z-50 bg-amber-400 flex flex-col max-w-5xl">
+        <div className="fixed top-0 left-0 right-0 bottom-[61px] z-50 bg-amber-400 flex flex-col  overflow-y-auto">
           <button onClick={() => setIsOpen(false)}>Close</button>
-          <RadioButtonField
-            title="เลือกประเภท"
-            choice={["รายรับ", "รายจ่าย"]}
-          />
+
           <div>เพิ่มข้อมูล</div>
           <Box className="mx-9 my-5 px-9 py-4">
             <div>เลือกไอคอน</div>
@@ -44,6 +41,10 @@ export function EditButton({ children }: Props) {
           </Box>
 
           <InputField title="ชื่อประเภท" placeholder="sample" />
+          <RadioButtonField
+            title="เลือกประเภท"
+            choice={["รายรับ", "รายจ่าย"]}
+          />
           <InputField title="จำนวนเงิน" placeholder="0.00" />
         </div>
       )}
