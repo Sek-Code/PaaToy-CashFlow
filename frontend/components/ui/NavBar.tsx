@@ -4,7 +4,6 @@ import { usePathname } from "next/navigation";
 import React from "react";
 import { HomeIcon, StatIcon, CategoryIcon, TransactionIcon, BudgetIcon } from "./icons/Icon";
 
-type Props = {};
 
 type NavItem = {
   href: string;
@@ -19,7 +18,7 @@ const navItems: NavItem[] = [
   { href: "/budget", Icon: BudgetIcon },
 ];
 
-export default function NavBar({}: Props) {
+export default function NavBar() {
   const pathname = usePathname();
 
   return (
