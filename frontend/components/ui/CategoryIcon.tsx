@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 type Props = {
@@ -14,7 +15,7 @@ export function CategoryIcon({ icon, category, className = "" }: Props) {
       <div
         className={`rounded-full w-[33px] h-[33px] flex justify-center items-center ${className} ${categoryColor}`}
       >
-        <img src={icon} alt={icon} className="w-fit h-fit"/>
+        <Image src={icon} alt={icon} className="w-fit h-fit"/>
       </div>
     </div>
   );
