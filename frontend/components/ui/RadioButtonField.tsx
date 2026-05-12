@@ -17,7 +17,7 @@ export default function RadioButtonField({
   ...props
 }: Props) {
   return (
-    <Box className={`mx-9 my-5 px-9 pt-4 pb-6 flex flex-col ${className}`}>
+    <Box className={`mx-9 px-9 pt-4 pb-6 flex flex-col ${className}`}>
       <label className="mb-3 text-sub-2 font-medium">{title}</label>
 
       <div className="grid grid-flow-col">
@@ -25,6 +25,7 @@ export default function RadioButtonField({
           <label
             htmlFor={option}
             className="flex items-center gap-x-2.5 cursor-pointer"
+            key={option}
           >
             <input
               type="radio"

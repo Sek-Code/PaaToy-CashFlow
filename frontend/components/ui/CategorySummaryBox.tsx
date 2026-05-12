@@ -1,6 +1,6 @@
-import React from 'react'
-import { Box } from './Box';
-import { CategoryIcon } from './CategoryIcon';
+import React from "react";
+import { Box } from "./Box";
+import { CategoryIcon } from "./CategoryIcon";
 
 export type CategoryData = {
   categoryName: string;
@@ -11,7 +11,7 @@ export type CategoryData = {
 type Props = {
   data: CategoryData[];
   category: "income" | "expense";
-}
+};
 
 //type data = { categoryName: string; amount: number };
 
@@ -23,7 +23,7 @@ type Props = {
 //   { categoryName: "others", amount: 1463.0 },
 // ];
 
-export function CategorySummaryBox({data, category}: Props) {
+export function CategorySummaryBox({ data, category }: Props) {
   return (
     <Box className="m-5">
       <p className="font-medium underline text-center pt-5 text-sub-2">
@@ -39,7 +39,7 @@ export function CategorySummaryBox({data, category}: Props) {
             key={data.categoryName}
           >
             <CategoryIcon
-              icon={`/category-icon/${data.categoryIconName}.svg`}
+              icon={data.categoryIconName || ""}
               category={category}
               className="mr-1"
             />

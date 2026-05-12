@@ -4,6 +4,8 @@ import { Box } from "./Box";
 import { Divide } from "lucide-react";
 import InputField from "./InputField";
 import RadioButtonField from "./RadioButtonField";
+import Image from "next/image";
+import { IconField } from "./IconField";
 
 type Props = { children?: React.ReactNode };
 
@@ -18,7 +20,7 @@ export function EditButton({ children }: Props) {
   };
 
   return (
-    <>
+    <div>
       <Box
         className=" m-5 py-2.5 flex justify-center cursor-pointer rounded-[5px] border border-expense-text"
         onClick={handleClick}
@@ -31,23 +33,31 @@ export function EditButton({ children }: Props) {
       </Box>
 
       {isOpen && (
-        <div className="fixed top-0 left-0 right-0 bottom-[61px] z-50 bg-amber-400 flex flex-col  overflow-y-auto">
-          <button onClick={() => setIsOpen(false)}>Close</button>
-
-          <div>เพิ่มข้อมูล</div>
-          <Box className="mx-9 my-5 px-9 py-4">
-            <div>เลือกไอคอน</div>
-            <div>list of icon</div>
-          </Box>
+        <div className="absolute top-0 left-0 right-0 bottom-0 z-2 w-full max-w-5xl mx-auto bg-pink-400 flex flex-col gap-y-5">
+          <div className="relative mx-9 mt-13 ">
+            <button className="align-middle" onClick={() => setIsOpen(false)}>
+              <Image
+                width={16}
+                height={16}
+                src="/ep_arrow-up-bold.svg"
+                alt="back-arrow"
+              ></Image>
+            </button>
+            <h1 className="absolute text-sub-1 inline left-[50%] translate-x-[-50%] top-[50%] translate-y-[-50%]">
+              เพิ่มข้อมูล
+            </h1>
+          </div>
+        <IconField/>
 
           <InputField title="ชื่อประเภท" placeholder="sample" />
           <RadioButtonField
             title="เลือกประเภท"
-            choice={["รายรับ", "รายจ่าย"]}
+            choice={["รายจ่าย", "รายรับ"]}
           />
           <InputField title="จำนวนเงิน" placeholder="0.00" />
+          <button>บันทึกข้อมูล</button>
         </div>
       )}
-    </>
+    </div>
   );
 }

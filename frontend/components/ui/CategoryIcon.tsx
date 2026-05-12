@@ -7,14 +7,18 @@ type Props = {
 };
 
 export function CategoryIcon({ icon, category, className = "" }: Props) {
-    const categoryColor = `bg-${category}-icon`;
-    //category === "income" ? "bg-income-icon" : "bg-expense-icon";
+
+  const categoryColor =
+    category === "income" ? "bg-income-icon" : "bg-expense-icon";
+
   return (
     <div>
       <div
         className={`rounded-full w-[33px] h-[33px] flex justify-center items-center ${className} ${categoryColor}`}
       >
-        <img src={icon} alt={icon} className="w-fit h-fit"/>
+        <svg className="w-5 h-5 text-white">
+          <use xlinkHref={`/category-sprite.svg#${icon}`} />
+        </svg>
       </div>
     </div>
   );

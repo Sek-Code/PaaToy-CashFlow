@@ -9,7 +9,7 @@ interface Props extends React.ComponentPropsWithoutRef<"input"> {
 
 export default function InputField({title = '', error="", className ="",...props}: Props) {
     return (
-      <Box className={`mx-9 my-5 px-9 py-4 flex flex-col ${className}`}>
+      <Box className={`mx-9 px-9 py-4 flex flex-col ${className}`}>
         {title && (
           <label className="mb-3 text-sub-2 font-medium">{title}</label>
         )}
@@ -20,7 +20,7 @@ export default function InputField({title = '', error="", className ="",...props
             // type={inputType}
             // placeholder="sample"
           />
-            </div>
+        </div>
 
         {error && (
           <span className="text-xs text-expense-text mt-1">{error}</span>
