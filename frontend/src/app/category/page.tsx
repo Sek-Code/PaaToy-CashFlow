@@ -29,7 +29,7 @@ export default function Category({}: Props) {
             className="grid grid-cols-2 justify-items-center"
           >
             {expenseData.map((data: expenseData) => (
-              <div className="flex items-center m-5">
+              <div key={data.categoryName} className="flex items-center m-5">
                 <CategoryIcon
                   icon={`/category-icon/${data.categoryName}.svg`}
                   category="expense"
