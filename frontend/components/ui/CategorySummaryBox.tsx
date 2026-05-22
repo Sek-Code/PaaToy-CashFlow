@@ -25,7 +25,7 @@ type Props = {
 
 export function CategorySummaryBox({ data, category }: Props) {
   return (
-    <Box className="m-5">
+    <Box className="m-5" category="neutral">
       <p className="font-medium underline text-center pt-5 text-sub-2">
         {category === "income" ? "รายรับ" : "รายจ่าย"}
       </p>

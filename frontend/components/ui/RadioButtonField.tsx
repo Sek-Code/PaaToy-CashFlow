@@ -1,12 +1,14 @@
 import React from "react";
 import { Box } from "./Box";
-import { Divide } from "lucide-react";
 
 interface Props extends React.ComponentPropsWithoutRef<"input"> {
   title: string;
   error?: string;
   className?: string;
   choice: string[];
+  value?: string;
+  onChange?: (value: any) => void;
+  ref?: React.Ref<HTMLInputElement>;
 }
 
 export default function RadioButtonField({
@@ -14,6 +16,9 @@ export default function RadioButtonField({
   error = "",
   className = "",
   choice,
+  value,
+  onChange,
+  ref,
   ...props
 }: Props) {
   return (
@@ -28,11 +33,18 @@ export default function RadioButtonField({
             key={option}
           >
             <input
+              {...props}
+              ref={ref}
               type="radio"
               id={option}
               name={title}
               value={option}
-              defaultChecked={index === 0}
+              checked={value !== undefined ? value === option : undefined}
+              defaultChecked={value === undefined ? index === 0 : undefined}
+              onChange={(e) => {
+                onChange?.(option);
+                props.onChange?.(e);
+              }}
               className="sr-only peer "
             />
             <div className="w-[15px] h-[15px] rounded-full shrink-0 bg-white outline-[0.5px] outline-neutral-sub peer-checked:bg-neutral-sub peer-checked:border-[2.25px] peer-checked:border-white peer-focus-visible:shadow-focus peer-focus-visible:outline-offset-1"></div>

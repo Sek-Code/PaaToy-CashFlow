@@ -46,11 +46,11 @@ const balanceColor = `text-${balanceCategory}-text`;
 
 export default function Category({}: Props) {
   return (
-    <div className="relative mx-auto max-w-5xl bg-amber-400">
+    <div className="">
       <h1 className="text-center text-sub-1 mb-5 mt-13 mx-19">
         รายรับ-รายจ่ายตามประเภท
       </h1>
-      <EditButton>เพิ่มข้อมูล</EditButton>
+
       <CategorySummaryBox data={expenseData} category="expense" />
       <CategorySummaryBox data={incomeData} category="income" />
       <Box category={balanceCategory} className="m-5 p-4 text-center">
@@ -58,8 +58,8 @@ export default function Category({}: Props) {
         <p className={`text-2xl font-bold  ${balanceColor}`}>฿ {balance}</p>
       </Box>
 
-      <CategorySummaryBox data={incomeData} category="income" />
-      
+
+      <EditButton>เพิ่มข้อมูล</EditButton>
     </div>
   );
 }
