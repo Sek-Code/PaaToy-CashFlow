@@ -36,7 +36,7 @@ export default function RootLayout({
             {children}
           </main>
         <button
-          className="absolute top-[24px] right-[26px] z-50 p-2 cursor-pointer"
+          className="absolute top-[24px] right-[26px] z-50 cursor-pointer"
           aria-label="Close"
         >
           <img
