@@ -46,7 +46,7 @@ export function AddCategoryForm({
   const iconCategory = selectedType === "รายรับ" ? "income" : "expense";
 
   return (
-    <div className="absolute pt-[53px] top-0 left-0 right-0 bottom-0 z-10 bg-income-bg flex flex-col gap-y-5">
+    <div className="absolute pt-[53px] top-0 left-0 right-0 bottom-0 z-10 bg-neutral-bg flex flex-col gap-y-5">
       <div className="relative mx-9 ">
         <button className="align-middle" onClick={onClose}>
           <Image
