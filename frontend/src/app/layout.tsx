@@ -28,8 +28,26 @@ export default function RootLayout({
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
-<NavBar/>
+      <body className="min-h-full w-full flex flex-col pb-[62px]">
+<div className="max-w-5xl mx-auto relative min-h-screen bg-neutral-bg">
+          
+          {/* Content ของแต่ละหน้า */}
+          <main className="">
+            {children}
+          </main>
+        <button
+          className="absolute top-[24px] right-[26px] z-50 cursor-pointer"
+          aria-label="Close"
+        >
+          <img
+            src="/closeButton.svg"
+            className="w-[11.33px] h-[11.33px]"
+            alt="Close"
+          />
+          </button>
+          </div>
+        <NavBar />
+      </body>
     </html>
   );
 }

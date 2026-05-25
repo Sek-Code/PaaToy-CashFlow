@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import React from "react";
 import { HomeIcon, StatIcon, CategoryIcon, TransactionIcon, BudgetIcon } from "./icons/Icon";
 
+type Props = {};
 
 type NavItem = {
   href: string;
@@ -18,18 +19,22 @@ const navItems: NavItem[] = [
   { href: "/budget", Icon: BudgetIcon },
 ];
 
-export default function NavBar() {
+export default function NavBar({}: Props) {
   const pathname = usePathname();
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 px-9.5 py-4 bg-white">
+    <div className="fixed bottom-0 left-0 right-0 z-50 px-9.5 py-4 bg-white max-h-[62px] ">
       <div className="flex gap-11 justify-center bg-white">
         {navItems.map((item: NavItem) => {
-        const { Icon } = item;
+          const { Icon } = item;
           const isActive = pathname === item.href;
           return (
             <Link key={item.href} href={item.href}>
-              <Icon className={isActive ? "text-navbar-active" : "text-navbar-inactive"} />
+              <Icon
+                className={
+                  isActive ? "text-navbar-active" : "text-navbar-inactive"
+                }
+              />
             </Link>
           );
         })}
